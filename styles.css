@@ -710,7 +710,7 @@ b { font-weight: 600; color: var(--text-strong); }
      вопрос" button stays pinned to its bottom — always tappable, no page scroll.
      Sticky-in-the-card (not position:fixed) is immune to ancestor transforms
      from the entrance / question-swap animations. */
-  .view-station { display: flex; flex-direction: column; min-height: calc(100svh - 40px); }
+  .view-station { display: flex; flex-direction: column; height: calc(100svh - 40px); min-height: calc(100svh - 40px); }
   .view-station .content { flex: 1 1 auto; min-height: 0; display: flex; }
   .view-station .track { margin-bottom: 12px; flex: 0 0 auto; }
   .view-station .card {
