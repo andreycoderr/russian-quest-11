@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Квест-тренажёр по русскому языку за 11 класс: синтаксис и пунктуация, нормы речи, словосочетание, тире, однородные и обособленные члены, сложные предложения, прямая речь. Подготовка к ЕГЭ. От репетитора Арины Галицкой." />
+  <meta name="theme-color" content="#0b0d14" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+  <title>Русский язык · 11 класс — квест-тренажёр</title>
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  </div>
+
+  <div class="page">
+
+    <!-- ===== MAP / HOME ===== -->
+    <section class="view view-map" id="view-map">
+      <a class="cta-banner cta-top" href="https://t.me/ArinaGalitskaya" target="_blank" rel="noopener" aria-label="Записаться на занятие с Ариной в Telegram">
+        <span class="cta-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9.04 15.66 8.85 19.4c.27 0 .39-.11.53-.25l1.27-1.21 2.63 1.93c.48.27.83.13.95-.45l1.72-8.07.01-.01c.16-.74-.27-1.03-.74-.85L4.06 14.36c-.73.28-.72.69-.12.87l2.6.81 6.05-3.81c.29-.18.55-.08.34.1z"/></svg>
+        </span>
+        <span class="cta-content">
+          <strong>Заниматься с&nbsp;Ариной</strong>
+          <span class="cta-sub">персональная подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ · Telegram</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <header class="hero">
+        <div class="hero-body">
+          <span class="eyebrow">подготовка к&nbsp;экзамену</span>
+          <h1 class="hero-title">Русский язык<span class="hero-dot">.</span> <span class="grad">11&nbsp;класс</span><br />Большой квест по&nbsp;всей&nbsp;программе</h1>
+          <p class="hero-sub">12 станций, почти 100 заданий в&nbsp;формате экзамена. Отвечаешь — мгновенно видишь правило, набираешь звёзды, держишь серию и&nbsp;растёшь в&nbsp;ранге.</p>
+          <p class="hero-note"><span class="hero-note-ico" aria-hidden="true">📱</span><span>Чтобы прогресс сохранялся, заходи с&nbsp;<b>одного и&nbsp;того&nbsp;же устройства</b> (например, телефона) и&nbsp;через <b>один и&nbsp;тот&nbsp;же браузер</b>.</span></p>
+          <p class="hero-reward"><span class="hero-reward-ico" aria-hidden="true">🎓</span> По итогам курса вы получите именной <b>сертификат</b> и&nbsp;<b>развёрнутый разбор итоговых результатов</b>.</p>
+          <div class="hero-chips">
+            <span class="chip"><b>12</b> станций</span>
+            <span class="chip"><b id="chip-q">99</b> заданий</span>
+            <span class="chip"><b>каждое</b> с&nbsp;разбором</span>
+          </div>
+          <button class="btn btn-primary btn-lg hero-cta" id="start-btn" type="button">
+            <span id="start-label">Начать квест</span><span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="progress-orb" role="status" aria-label="Общий прогресс">
+          <svg viewBox="0 0 120 120" class="orb-ring" aria-hidden="true">
+            <defs>
+              <linearGradient id="orbgrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#c084fc" /><stop offset="100%" stop-color="#ec4899" />
+              </linearGradient>
+            </defs>
+            <circle class="orb-track" cx="60" cy="60" r="52" />
+            <circle class="orb-fill" id="orb-fill" cx="60" cy="60" r="52" />
+          </svg>
+          <div class="orb-inner">
+            <span class="orb-num"><span id="stars-earned">0</span><span class="orb-slash">/</span><span id="stars-total">0</span></span>
+            <span class="orb-label">звёзд</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="rank-banner" id="rank-banner" hidden></div>
+
+      <div class="settings" id="settings">
+        <span class="set-label">Порог открытия станции</span>
+        <div class="set-options" id="set-options" role="group" aria-label="Порог открытия станции">
+          <button type="button" data-th="0.5">½&nbsp;· 50%</button>
+          <button type="button" data-th="0.6">60%</button>
+          <button type="button" data-th="0.7">70%</button>
+          <button type="button" data-th="1">Все&nbsp;⭐</button>
+        </div>
+        <span class="set-hint" id="set-hint"></span>
+      </div>
+
+      <div class="map-grid" id="map-grid" aria-label="Карта квеста"></div>
+
+      <div class="finale" id="finale"></div>
+
+      <div class="map-footer">
+        <button class="btn btn-ghost" id="reset-progress" type="button">Сбросить прогресс</button>
+        <p class="map-note">Прогресс сохраняется в&nbsp;этом браузере автоматически.</p>
+      </div>
+    </section>
+
+    <!-- ===== STATION / PLAY ===== -->
+    <section class="view view-station" id="view-station" hidden>
+      <div class="station-bar">
+        <button class="back-btn" id="back-btn" type="button" aria-label="Вернуться к карте">
+          <span aria-hidden="true">←</span> К&nbsp;карте
+        </button>
+        <div class="station-meta">
+          <span class="station-tag" id="st-tag">Ор</span>
+          <span class="station-name" id="st-name">Станция</span>
+        </div>
+        <div class="hud">
+          <span class="streak" id="streak" hidden>🔥&nbsp;<span id="streak-n">0</span></span>
+          <span class="station-score"><span id="st-score">0</span><span class="muted">/<span id="st-score-total">0</span></span>&nbsp;⭐</span>
+        </div>
+      </div>
+
+      <div class="track" aria-hidden="true"><div class="track-fill" id="track-fill"></div></div>
+
+      <main class="content">
+        <section class="card question" id="qcard">
+          <div class="question-head">
+            <span class="qnum">Вопрос <span id="qnum">1</span> <span class="muted">из <span id="qtotal">1</span></span></span>
+          </div>
+          <p class="qtext" id="qtext"></p>
+          <div class="qpassage" id="qpassage" hidden></div>
+          <div class="board" id="board" aria-live="polite"></div>
+          <div class="feedback" id="feedback" hidden></div>
+          <div class="controls">
+            <button id="next-btn" class="btn btn-primary" type="button" hidden>
+              <span id="next-label">Следующий вопрос</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <!-- ===== STATION RESULT ===== -->
+    <section class="view view-result" id="view-result" hidden>
+      <div class="result-card card">
+        <div class="result-badge" id="result-badge">⭐</div>
+        <h2 class="result-title" id="result-title">Станция пройдена!</h2>
+        <p class="result-score" id="result-score"></p>
+        <p class="result-sub" id="result-sub"></p>
+        <div class="result-actions">
+          <button class="btn btn-primary btn-lg" id="result-next" type="button" hidden>
+            <span>Следующая станция</span><span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="btn btn-soft" id="result-retry" type="button">Пройти заново</button>
+          <button class="btn btn-ghost" id="result-map" type="button">К&nbsp;карте квеста</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FINAL CERTIFICATE ===== -->
+    <section class="view view-cert" id="view-certificate" hidden>
+      <div class="cert-wrap">
+        <div class="cert" id="cert">
+          <span class="cert-seal" aria-hidden="true">★</span>
+          <span class="cert-eyebrow">Подготовка к&nbsp;ОГЭ и&nbsp;ЕГЭ с&nbsp;Ариной</span>
+          <h2 class="cert-title">Грамота</h2>
+          <p class="cert-line">награждается</p>
+          <input class="cert-name" id="cert-name" type="text" maxlength="40" placeholder="впишите имя ученика" autocomplete="off" />
+          <p class="cert-line">за прохождение квеста<br><b>«Русский язык. 11&nbsp;класс»</b></p>
+          <div class="cert-stats">
+            <div class="cert-stat"><span id="cert-stars">0/100</span><small>звёзд</small></div>
+            <div class="cert-stat"><span id="cert-pct">0%</span><small>верных</small></div>
+            <div class="cert-stat"><span id="cert-rank">—</span><small>ранг</small></div>
+          </div>
+          <p class="cert-date" id="cert-date"></p>
+        </div>
+        <div class="cert-actions">
+          <button class="btn btn-primary btn-lg" id="cert-analysis" type="button">📊&nbsp;Рекомендации и&nbsp;разбор ошибок</button>
+          <button class="btn btn-soft" id="cert-copy" type="button">📋&nbsp;Скопировать результат</button>
+          <button class="btn btn-soft" id="cert-png" type="button">🖼&nbsp;Сохранить грамоту</button>
+          <a class="btn btn-soft" id="cert-tg" target="_blank" rel="noopener">✈️&nbsp;Отправить репетитору</a>
+          <button class="btn btn-ghost" id="cert-map" type="button">К&nbsp;карте</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ANALYSIS / RECOMMENDATIONS ===== -->
+    <section class="view view-analysis" id="view-analysis" hidden>
+      <div class="analysis-wrap">
+        <h2 class="analysis-title">Твой разбор и&nbsp;рекомендации</h2>
+        <p class="analysis-sub" id="analysis-sub"></p>
+        <div class="analysis-body" id="analysis-body"></div>
+        <div class="analysis-arina">
+          <span class="arina-ico" aria-hidden="true">💬</span>
+          <p>Если по&nbsp;каким-то темам остаются сложности — <b>обязательно обратись к&nbsp;Арине</b>. На&nbsp;занятии вы разберёте ошибки персонально и&nbsp;закроете пробелы.</p>
+          <a class="btn btn-primary" href="https://t.me/ArinaGalitskaya" target="_blank" rel="noopener">Написать Арине в&nbsp;Telegram</a>
+        </div>
+        <div class="analysis-actions">
+          <button class="btn btn-soft" id="analysis-copy" type="button">📋&nbsp;Скопировать рекомендации</button>
+          <button class="btn btn-ghost" id="analysis-back" type="button">← К&nbsp;грамоте</button>
+          <button class="btn btn-ghost" id="analysis-map" type="button">К&nbsp;карте</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="data.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
