@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
   <title>Русский язык · 11 класс — квест-тренажёр</title>
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <div class="aurora" aria-hidden="true">
@@ -87,6 +87,10 @@
         <button class="btn btn-ghost" id="reset-progress" type="button">Сбросить прогресс</button>
         <p class="map-note">Прогресс сохраняется в&nbsp;этом браузере автоматически.</p>
       </div>
+
+      <button class="teacher-btn" id="teacher-btn" type="button" aria-label="Кнопка учителя — открыть доступ ко всем станциям по коду">
+        <span class="tb-ico" aria-hidden="true">🔑</span> Кнопка учителя
+      </button>
     </section>
 
     <!-- ===== STATION / PLAY ===== -->
@@ -194,7 +198,7 @@
   <div class="toast" id="toast" hidden></div>
   <canvas id="confetti" aria-hidden="true"></canvas>
 
-  <script src="data.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="data.js?v=3"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

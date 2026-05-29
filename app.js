@@ -53,6 +53,10 @@
   if (!progress.settings) progress.settings = {};
   if (typeof progress.settings.threshold !== "number") progress.settings.threshold = 0.5;
   if (typeof progress.settings.name !== "string") progress.settings.name = "";
+  if (typeof progress.settings.teacher !== "boolean") progress.settings.teacher = false;
+
+  // teacher mode: a code unlocks access to every station at once
+  const TEACHER_CODE = "1106";
 
   // a station is "passed" once you score at least the chosen share of its stars
   function passReq(total) { return Math.max(1, Math.ceil(total * progress.settings.threshold)); }
@@ -60,8 +64,9 @@
     const s = STATIONS[index];
     return (progress.best[s.id] || 0) >= passReq(s.questions.length);
   }
-  // the next station unlocks only after the previous one is passed (≥ half stars)
-  function isUnlocked(index) { return index === 0 || isPassed(index - 1); }
+  // the next station unlocks only after the previous one is passed (≥ half stars).
+  // Teacher mode opens access to all stations regardless of progress.
+  function isUnlocked(index) { return !!progress.settings.teacher || index === 0 || isPassed(index - 1); }
   function earnedStars() { return STATIONS.reduce((n, s) => n + (progress.best[s.id] || 0), 0); }
   function firstPlayableIndex() {
     for (let i = 0; i < STATIONS.length; i++) {
@@ -140,10 +145,44 @@
     });
 
     renderSettings();
+    renderTeacherBtn();
     renderFinale();
   }
 
   function allPassed() { return STATIONS.every((_, i) => isPassed(i)); }
+
+  // ---------- teacher mode ----------
+  function renderTeacherBtn() {
+    const b = $("#teacher-btn");
+    if (!b) return;
+    const on = !!progress.settings.teacher;
+    b.classList.toggle("is-active", on);
+    b.innerHTML = on
+      ? '<span class="tb-ico" aria-hidden="true">🔓</span> Учитель: доступ открыт'
+      : '<span class="tb-ico" aria-hidden="true">🔑</span> Кнопка учителя';
+  }
+
+  function handleTeacherClick() {
+    if (progress.settings.teacher) {
+      if (confirm("Выключить режим учителя? Доступ к станциям снова будет открываться по набранному порогу.")) {
+        progress.settings.teacher = false;
+        saveProgress();
+        renderMap();
+        toast("Режим учителя выключен");
+      }
+      return;
+    }
+    const code = prompt("Кнопка учителя\n\nВведите код, чтобы открыть доступ ко всем станциям:");
+    if (code === null) return; // отмена
+    if (code.trim() === TEACHER_CODE) {
+      progress.settings.teacher = true;
+      saveProgress();
+      renderMap();
+      toast("Доступ открыт: все станции разблокированы");
+    } else {
+      toast("Неверный код");
+    }
+  }
 
   // ---------- settings (unlock threshold) ----------
   function renderSettings() {
@@ -649,11 +688,12 @@
   $("#result-map").addEventListener("click", goMap);
   $("#reset-progress").addEventListener("click", () => {
     if (confirm("Сбросить весь прогресс квеста? Собранные звёзды и открытые станции обнулятся.")) {
-      progress = { best: {}, done: {}, settings: { threshold: progress.settings.threshold, name: progress.settings.name } };
+      progress = { best: {}, done: {}, settings: { threshold: progress.settings.threshold, name: progress.settings.name, teacher: progress.settings.teacher } };
       saveProgress();
       renderMap();
     }
   });
+  $("#teacher-btn").addEventListener("click", handleTeacherClick);
 
   // threshold selector
   document.querySelectorAll("#set-options button").forEach(b => {
